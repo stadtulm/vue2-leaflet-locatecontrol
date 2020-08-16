@@ -1,13 +1,8 @@
-<template>
-  <div style="display: none;">
-    <slot v-if="ready"></slot>
-  </div>
-</template>
-
 <script>
 import { DomEvent } from 'leaflet';
 import { OptionsMixin, ControlMixin, propsBinder, optionsMerger, findRealParent } from 'vue2-leaflet';
 import LocateControl from "leaflet.locatecontrol";
+import 'leaflet.locatecontrol/dist/L.Control.Locate.css';
 
 const props = {
   position: {
@@ -33,10 +28,10 @@ export default {
     propsBinder(this, this.mapObject, this.$options.props);
     this.parentContainer = findRealParent(this.$parent);
     this.mapObject.addTo(this.parentContainer.mapObject);
+  },
+
+  render () {
+    return null;
   }
 }
 </script>
-
-<style>
-@import "~leaflet.locatecontrol/dist/L.Control.Locate.css";
-</style>
