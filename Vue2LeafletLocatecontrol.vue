@@ -5,44 +5,34 @@
 </template>
 
 <script>
-import L, { DomEvent } from 'leaflet';
-import { findRealParent, propsBinder } from 'vue2-leaflet';
-import "leaflet.locatecontrol";
+import { DomEvent } from 'leaflet';
+import { OptionsMixin, ControlMixin, propsBinder, optionsMerger, findRealParent } from 'vue2-leaflet';
+import LocateControl from "leaflet.locatecontrol";
 
 const props = {
-  options: {
-    type: Object,
-    default() { return {}; },
-  },
-  visible: {
-    type: Boolean,
-    custom: true,
-    default: true
+  position: {
+    type: String,
+    default: 'topleft'
   }
 }
 
 export default {
   name: "Vue2LeafletLocatecontrol",
 
+  mixins: [ControlMixin, OptionsMixin],
+
   props: props,
 
-  data() {
-    return {
-      ready: false
-    }
-  },
-
-  beforeDestroy() {
-    this.parentContainer.removeLayer(this);
-  },
-
   mounted() {
-    this.mapObject = L.control.locate(this.options);
+    const options = optionsMerger({
+      ...this.controlOptions,
+      options: this.options,
+    }, this);
+    this.mapObject = new LocateControl(options);
     DomEvent.on(this.mapObject, this.$listeners);
-    propsBinder(this, this.mapObject, props);
-    this.ready = true;
+    propsBinder(this, this.mapObject, this.$options.props);
     this.parentContainer = findRealParent(this.$parent);
-    this.mapObject.addTo(this.parentContainer.mapObject, !this.visible);
+    this.mapObject.addTo(this.parentContainer.mapObject);
   }
 }
 </script>
