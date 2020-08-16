@@ -12,7 +12,7 @@ const props = {
 }
 
 export default {
-  name: "Vue2LeafletLocatecontrol",
+  name: "LLocateControl",
 
   mixins: [ControlMixin, OptionsMixin],
 

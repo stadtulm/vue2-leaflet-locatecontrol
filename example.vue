@@ -1,20 +1,20 @@
 <template>
   <v-map :zoom="10" :center="initialLocation">
     <v-tilelayer url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"></v-tilelayer>
-    <v-locatecontrol/>
   </v-map>
+    <l-locate-control/>
 </template>
 
 <script>
 import { LMap, LTileLayer } from "vue2-leaflet";
 import { latLng, Icon, icon } from 'leaflet';
-import Vue2LeafletLocatecontrol from './Vue2LeafletLocatecontrol';
+import LLocateControl from './Vue2LeafletLocatecontrol';
 
 export default {
   components: {
     "v-map": LMap,
     "v-tilelayer": LTileLayer,
-    "v-locatecontrol": Vue2LeafletLocatecontrol
+    LLocateControl
   },
 
   data() {
